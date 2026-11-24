@@ -1,0 +1,177 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+/* Variante "claro:" para ajustes puntuales del tema claro (p. ej. claro:hidden). */
+@custom-variant claro (&:where([data-tema='claro'], [data-tema='claro'] *));
+
+/*
+|--------------------------------------------------------------------------
+| Identidad Visual Neo-Fintech · Privileg Distribuciones
+|--------------------------------------------------------------------------
+| Paleta y tipografía tomadas de design-system.png:
+|  Obsidiana Profunda #080A0F (fondo) · Grafito Neotécnico #141824 (superficies)
+|  Menta Eléctrica #00F5A0 (ingresos/abonos) · Cobre Solar #FF5E3A (mora/egresos)
+|  Violeta Sintético #8B5CF6 (identidad/cuentas) · Oro Champán #FFD166 (alertas previas)
+|  Cian Plasma #00E5FF (analítica) · Platino Espejo #F8FAFC (texto y totales)
+*/
+@theme {
+    --font-sans: var(--font-plus-jakarta-sans), 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-display: var(--font-space-grotesk), 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+
+    --color-obsidiana: #080a0f;
+    --color-grafito: #141824;
+    --color-grafito-alto: #1b2030;
+    --color-linea: #262c3d;
+    --color-menta: #00f5a0;
+    --color-violeta: #8b5cf6;
+    --color-cobre: #ff5e3a;
+    --color-oro: #ffd166;
+    --color-cian: #00e5ff;
+    --color-platino: #f8fafc;
+    --color-niebla: #8a93a6;
+
+    /* Tokens de apoyo: cambian de valor según el tema (ver tema claro abajo). */
+    --color-menu: #0b0e15;
+    --color-tinta: #ffffff;
+    --color-lila: #b49cfb;
+    --color-menta-brillo: #3dffbb;
+    --color-violeta-brillo: #9d76f8;
+    --color-esmeralda: #00a86f;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Tema claro "Porcelana"
+|--------------------------------------------------------------------------
+| Se activa con <html data-tema="claro"> (preferencia guardada en la cookie
+| privileg_tema). Fondo porcelana con tarjetas blancas, tinta azul noche y los
+| mismos acentos de la marca en tonos profundos para mantener contraste AA
+| (≥ 4.5:1 sobre el fondo): esmeralda, coral, ámbar, petróleo y violeta.
+| "tinta" reemplaza al blanco translúcido de bordes y hovers del tema oscuro.
+*/
+:root[data-tema='claro'] {
+    color-scheme: light;
+    --sombra-menu: rgb(15 23 42 / 0.16);
+
+    --color-obsidiana: #f3f5fa;
+    --color-grafito: #ffffff;
+    --color-grafito-alto: #eef1f7;
+    --color-linea: #dde3ee;
+    --color-menu: #ffffff;
+    --color-tinta: #0f172a;
+    --color-platino: #0f172a;
+    --color-niebla: #5b6577;
+    --color-menta: #007a55;
+    --color-menta-brillo: #00664a;
+    --color-cobre: #c8401b;
+    --color-oro: #8f5f00;
+    --color-cian: #0e7490;
+    --color-violeta: #7c3aed;
+    --color-violeta-brillo: #6d28d9;
+    --color-lila: #6d28d9;
+    --color-esmeralda: #34d399;
+}
+
+:root[data-tema='claro'] .card {
+    border-color: rgb(15 23 42 / 0.08);
+    box-shadow: 0 1px 2px rgb(15 23 42 / 0.04), 0 16px 36px -22px rgb(15 23 42 / 0.28);
+}
+
+:root[data-tema='claro'] body {
+    background-image:
+        radial-gradient(60rem 40rem at -10% -10%, rgb(0 122 85 / 0.08), transparent 60%),
+        radial-gradient(50rem 40rem at 110% 110%, rgb(124 58 237 / 0.08), transparent 60%),
+        radial-gradient(40rem 30rem at 60% 120%, rgb(200 64 27 / 0.05), transparent 60%);
+}
+
+@layer base {
+    :root {
+        --sombra-menu: rgb(0 0 0 / 0.7);
+    }
+
+    html {
+        color-scheme: dark;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+        @apply min-h-dvh bg-obsidiana font-sans text-platino antialiased;
+        background-image:
+            radial-gradient(60rem 40rem at -10% -10%, rgb(0 245 160 / 0.07), transparent 60%),
+            radial-gradient(50rem 40rem at 110% 110%, rgb(139 92 246 / 0.08), transparent 60%),
+            radial-gradient(40rem 30rem at 60% 120%, rgb(255 94 58 / 0.05), transparent 60%);
+        background-attachment: fixed;
+    }
+
+    h1, h2, h3 {
+        @apply font-display tracking-tight;
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--color-menta);
+        outline-offset: 2px;
+    }
+
+    ::selection {
+        background: rgb(0 245 160 / 0.3);
+    }
+
+    [hidden],
+    [x-cloak] {
+        display: none !important;
+    }
+}
+
+@layer utilities {
+    /* Cifras tabulares: columnas de montos alineadas (font-feature-settings "tnum"). */
+    .tnum {
+        font-feature-settings: 'tnum';
+        font-variant-numeric: tabular-nums;
+    }
+
+    .eyebrow {
+        @apply font-display text-[0.7rem] font-semibold tracking-[0.22em] uppercase;
+    }
+
+    .card {
+        @apply rounded-2xl border border-tinta/[0.06] bg-grafito/85 shadow-[0_1px_0_0_rgb(255_255_255/0.03)_inset,0_20px_40px_-24px_rgb(0_0_0/0.8)] backdrop-blur-sm;
+    }
+
+    .campo {
+        @apply block w-full rounded-xl border border-tinta/10 bg-obsidiana/70 px-3.5 py-2.5 text-sm text-platino placeholder:text-niebla/70 transition-[border-color,box-shadow] duration-150 focus:border-menta/70 focus:ring-2 focus:ring-menta/25 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60;
+    }
+
+    .campo-error {
+        @apply border-cobre/70 focus:border-cobre focus:ring-cobre/25;
+    }
+
+    .tabla {
+        @apply w-full text-left text-sm;
+    }
+
+    .tabla thead th {
+        @apply border-b border-tinta/[0.06] px-4 py-3 font-display text-[0.68rem] font-semibold tracking-[0.16em] whitespace-nowrap text-niebla uppercase;
+    }
+
+    .tabla tbody td {
+        @apply border-b border-tinta/[0.04] px-4 py-3.5 align-middle;
+    }
+
+    .tabla tbody tr {
+        @apply transition-colors duration-150 hover:bg-tinta/[0.025];
+    }
+}
+
+dialog::backdrop {
+    background: rgb(8 10 15 / 0.75);
+    backdrop-filter: blur(4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
